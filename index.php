@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>pole-etudiants</h1>
+    <a href="http:membres.php">voir les membres</a>
 </body>
 </html>

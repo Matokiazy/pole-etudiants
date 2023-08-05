@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 02 août 2023 à 16:51
+-- Généré le : sam. 05 août 2023 à 19:04
 -- Version du serveur : 5.7.36
 -- Version de PHP : 7.4.26
 
@@ -36,7 +36,8 @@ CREATE TABLE IF NOT EXISTS `collaborateurs` (
   `regionID` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `contact` bigint(100) NOT NULL,
-  PRIMARY KEY (`collaborateurID`)
+  PRIMARY KEY (`collaborateurID`),
+  KEY `regionID` (`regionID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
@@ -57,46 +58,50 @@ INSERT INTO `collaborateurs` (`collaborateurID`, `nom_collaborateur`, `prenom_co
 -- --------------------------------------------------------
 
 --
--- Structure de la table `evenement`
+-- Structure de la table `evenements`
 --
 
-DROP TABLE IF EXISTS `evenement`;
-CREATE TABLE IF NOT EXISTS `evenement` (
+DROP TABLE IF EXISTS `evenements`;
+CREATE TABLE IF NOT EXISTS `evenements` (
   `evenementID` int(11) NOT NULL AUTO_INCREMENT,
   `nom_evenement` varchar(500) DEFAULT NULL,
   `date_evenement` date DEFAULT NULL,
   `description_evenement` text,
   `partenaireID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`evenementID`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`evenementID`),
+  KEY `partenaireID` (`partenaireID`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `evenement`
+-- Déchargement des données de la table `evenements`
 --
 
-INSERT INTO `evenement` (`evenementID`, `nom_evenement`, `date_evenement`, `description_evenement`, `partenaireID`) VALUES
+INSERT INTO `evenements` (`evenementID`, `nom_evenement`, `date_evenement`, `description_evenement`, `partenaireID`) VALUES
 (1, 'reboisement', '2023-01-20', NULL, 3),
 (2, 'formation entreprenariat', '2023-05-03', NULL, 4),
-(3, 'guide d\'orientation', '2023-06-20', NULL, 2);
+(3, 'guide d\'orientation', '2023-06-20', NULL, 2),
+(4, 'don de sang', '2023-07-01', NULL, NULL),
+(5, 'forum d\'orientation professionnelle', '2023-08-05', NULL, NULL),
+(6, 'cours préparation aux concours d\'entré à l\'universitairé', '2023-09-02', NULL, 2);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `filiere`
+-- Structure de la table `filieres`
 --
 
-DROP TABLE IF EXISTS `filiere`;
-CREATE TABLE IF NOT EXISTS `filiere` (
+DROP TABLE IF EXISTS `filieres`;
+CREATE TABLE IF NOT EXISTS `filieres` (
   `filiereID` int(11) NOT NULL AUTO_INCREMENT,
   `nom_filiere` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`filiereID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `filiere`
+-- Déchargement des données de la table `filieres`
 --
 
-INSERT INTO `filiere` (`filiereID`, `nom_filiere`) VALUES
+INSERT INTO `filieres` (`filiereID`, `nom_filiere`) VALUES
 (1, 'sciences'),
 (2, 'DEGS'),
 (3, 'polytechnique'),
@@ -107,11 +112,11 @@ INSERT INTO `filiere` (`filiereID`, `nom_filiere`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `membre`
+-- Structure de la table `membres`
 --
 
-DROP TABLE IF EXISTS `membre`;
-CREATE TABLE IF NOT EXISTS `membre` (
+DROP TABLE IF EXISTS `membres`;
+CREATE TABLE IF NOT EXISTS `membres` (
   `membreID` int(11) NOT NULL AUTO_INCREMENT,
   `nom_membre` varchar(100) DEFAULT NULL,
   `prenom_membre` varchar(100) DEFAULT NULL,
@@ -119,14 +124,16 @@ CREATE TABLE IF NOT EXISTS `membre` (
   `CIN` varchar(100) DEFAULT NULL,
   `region_id` int(11) NOT NULL,
   `filiere_id` int(11) NOT NULL,
-  PRIMARY KEY (`membreID`)
+  PRIMARY KEY (`membreID`),
+  KEY `region_id` (`region_id`),
+  KEY `filiere_id` (`filiere_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `membre`
+-- Déchargement des données de la table `membres`
 --
 
-INSERT INTO `membre` (`membreID`, `nom_membre`, `prenom_membre`, `email_membre`, `CIN`, `region_id`, `filiere_id`) VALUES
+INSERT INTO `membres` (`membreID`, `nom_membre`, `prenom_membre`, `email_membre`, `CIN`, `region_id`, `filiere_id`) VALUES
 (1, 'MARA', 'Matokiazy', 'mara@gmail.com', '11011016684', 1, 3),
 (2, 'RAHARINIRINA', 'Sergina', 'sergina@gmail.com', '123398946326', 2, 1),
 (3, 'SOJA', 'Nicolas', 'dera@gmil.com', '301456987123', 3, 1),
@@ -155,11 +162,11 @@ INSERT INTO `membre` (`membreID`, `nom_membre`, `prenom_membre`, `email_membre`,
 -- --------------------------------------------------------
 
 --
--- Structure de la table `offre`
+-- Structure de la table `offres`
 --
 
-DROP TABLE IF EXISTS `offre`;
-CREATE TABLE IF NOT EXISTS `offre` (
+DROP TABLE IF EXISTS `offres`;
+CREATE TABLE IF NOT EXISTS `offres` (
   `offreID` int(11) NOT NULL AUTO_INCREMENT,
   `poste` varchar(200) DEFAULT NULL,
   `entreprise` varchar(200) DEFAULT NULL,
@@ -171,45 +178,48 @@ CREATE TABLE IF NOT EXISTS `offre` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `partenaire`
+-- Structure de la table `partenaires`
 --
 
-DROP TABLE IF EXISTS `partenaire`;
-CREATE TABLE IF NOT EXISTS `partenaire` (
+DROP TABLE IF EXISTS `partenaires`;
+CREATE TABLE IF NOT EXISTS `partenaires` (
   `partenaireID` int(11) NOT NULL AUTO_INCREMENT,
   `nom_partenaire` varchar(100) DEFAULT NULL,
   `intitule` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`partenaireID`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `partenaire`
+-- Déchargement des données de la table `partenaires`
 --
 
-INSERT INTO `partenaire` (`partenaireID`, `nom_partenaire`, `intitule`) VALUES
+INSERT INTO `partenaires` (`partenaireID`, `nom_partenaire`, `intitule`) VALUES
 (1, 'BNI', 'partenaire financiere'),
 (2, 'UNIVERSITE ANTANANARIVO', 'partenaire OFFICIELLE'),
 (3, 'Groupe SODIAT', 'Appuis logistique'),
-(4, 'PKMF', 'Appuis TECHNIQUE');
+(4, 'PKMF', 'Appuis TECHNIQUE'),
+(5, 'MIN SANTE PUBLIQUE', NULL),
+(6, 'MIN ENVIRONNEMENT', NULL),
+(7, 'UNICEF', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `region`
+-- Structure de la table `regions`
 --
 
-DROP TABLE IF EXISTS `region`;
-CREATE TABLE IF NOT EXISTS `region` (
+DROP TABLE IF EXISTS `regions`;
+CREATE TABLE IF NOT EXISTS `regions` (
   `regionID` int(11) NOT NULL AUTO_INCREMENT,
   `nom_region` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`regionID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `region`
+-- Déchargement des données de la table `regions`
 --
 
-INSERT INTO `region` (`regionID`, `nom_region`) VALUES
+INSERT INTO `regions` (`regionID`, `nom_region`) VALUES
 (1, 'vakinakaratra'),
 (2, 'analamanga'),
 (3, 'bongolava'),
